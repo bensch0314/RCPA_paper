@@ -50,12 +50,13 @@
 
 \usepackage{alltt}
 \usepackage{graphicx}
-
+\usepackage{setspace}
 \usepackage{amsmath}
 
+\doublespacing
 
 \title{An Analysis of the Impact of Rent Control on New York City Housing}
-\author{Benjamin W. Schweitzer \and Thomas J. Fisher \and Karsten Maurer}
+\author{Benjamin W. Schweitzer \and Thomas J. Fisher \and Karsten Maurer \and Alison Tuiyott \and Lydia Carter \and Robert Garrett}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 
@@ -86,7 +87,7 @@ Now each row represents a unit that has all of these varaibles we have created t
 \subsection{Exploratory Data Analysis}
 This data set can be explored visually to identify trend in the data that might be useful during the modeling stage. In figure 1, you can see the proportion of homes with an external damage partitioned by borough, rent quartile, and whether or not the home was under rent control. It is clear that in almost all bouroughs, for each rent quartile, the porporiton of rent controlled homes with an external damage is higher than than the proportion of homes not under rent control with an external damage. This trend is seen in most years in all three damage types, indicating there may a correaltion bewtween rent control status and higher damage rates.
 
-In Figure 2, you can see the porportion of homes in Brooklyn with a utility damage over time, along with bands that represent the middle 50 percent of sub-borough damage rates that were used to calculate the borough wide porportion. You can see that there exists a gap between the rent controlled and non rent controlled damage rates each year. This may reinforce the trend we started to see in figure 1, indicating we may see some positive correlation between rent control status and higher damage rates in teh three categories.
+In Figure 2, you can see the median sub-borough utility damage rate of homes in Brooklyn over time, along with bands that represent the middle 50 percent of sub-borough damage rates that were used to calculate the borough wide porportion. You can see that there exists a gap between the rent controlled and non rent controlled damage rates each year. This may reinforce the trend we started to see in figure 1, indicating we may see some positive correlation between rent control status and higher damage rates in the three categories.
  
 
 
@@ -121,6 +122,10 @@ In Figure 2, you can see the porportion of homes in Brooklyn with a utility dama
 
 During the aggregation process, we ran into a problem with some of the sub-borough level proportions. In some cases, there would only be a few homes to represent the rent controlled or non-rent controlled homes within a rent quartile for a sub-borough. So, if there are only a few houses and they all have or do not have a damage present, the estimated proportion for the whole sub-borough becomes 100\% or 0\%. This is clearly incorrect, so we must do some form of correction to the proportions to ensure the sub-boroughs proportions are being accurately represented. Through Bayes regularization using a Beta conjugate with shape parameters chosen from groupings that didn’t result in a 0\% or 100\%, we were able to ‘fix’ the proportions to ensure the groups with few houses to represent the entire group have accurate proportions we can use in the modeling stage. 
 
+\[
+\mathbf{p} = \frac{n}{n+\alpha+\beta}*\hat{p}+\frac{\alpha+\beta}{n+\alpha+\beta}*\frac{\alpha}{\alpha+\beta}
+\]
+
 \begin{figure}
 \begin{center}
 \begin{knitrout}
@@ -147,23 +152,23 @@ log\left(\frac{Pest}{1-Pest}\right)
 \right]
 \]
 
-The predictors variables we used to model the response are as follows. RentControl has a value 1 if home is under rent control policy, 0 if otherwise. IthRentQuartile is 1 if home falls into the ith rent quartile, 0 if otherwise and if all are 0 the home is in the 1st rent quartile. Year has a value of 1990 subtracted from the year of the observation. Brooklyn has a value 1 if home is in Brooklyn, 0 if otherwise. Manhattan has a value 1 if home is in Manhattan, 0 if otherwise. Queens has a value 1 if home is in Queens, 0 if otherwise. StatenIsland has a value 1 if home is in StatenIsland, 0 if otherwise. If all borough variables have a value of 0, then the home is in the Bronx.
+The predictors variables we used to model the response are as follows. Rent Control (RC) has a value 1 if home is under rent control policy, 0 if otherwise. Ith Rent Quartile (Qi) is 1 if home falls into the ith rent quartile, 0 if otherwise and if all are 0 the home is in the 1st rent quartile. Year (T) has a value of 1990 subtracted from the year of the observation. Brooklyn has a value 1 if home is in Brooklyn, 0 if otherwise. Manhattan has a value 1 if home is in Manhattan, 0 if otherwise. Queens has a value 1 if home is in Queens, 0 if otherwise. StatenIsland has a value 1 if home is in StatenIsland, 0 if otherwise. If all borough variables have a value of 0, then the home is in the Bronx.
 
 \begin{align*}
 \mathbf{Y} = &\boldsymbol{\beta_0}+\\
-&\boldsymbol{\beta_1}*Year+\\
-&\boldsymbol{\beta_2}*2ndRentQuartile+
-\boldsymbol{\beta_3}*3rdRentQuartile+
-\boldsymbol{\beta_4}*4thRentQuartile+\\
-&\boldsymbol{\beta_5}*RentControl+
-\boldsymbol{\beta_6}*Brooklyn+
+&\boldsymbol{\beta_1}*T+\\
+&\boldsymbol{\beta_2}*Q2+
+\boldsymbol{\beta_3}*Q3+
+\boldsymbol{\beta_4}*Q4+\\
+&\boldsymbol{\beta_5}*RC+\\
+&\boldsymbol{\beta_6}*Brooklyn+
 \boldsymbol{\beta_7}*Manhattan+
 \boldsymbol{\beta_8}*Queens+
 \boldsymbol{\beta_9}*StatenIsland+\\
-&\boldsymbol{\beta_{10}}*RentControl*Year+\\
-&\boldsymbol{\beta_{11}}*RentControl*2ndRentQuartile+\\
-&\boldsymbol{\beta_{12}}*RentControl*3rdRentQuartile+\\
-&\boldsymbol{\beta_{13}}*RentControl*4thRentQuartile
+&\boldsymbol{\beta_{10}}*RC*T+\\
+&\boldsymbol{\beta_{11}}*RC*Q2+
+\boldsymbol{\beta_{12}}*RC*Q3+
+\boldsymbol{\beta_{13}}*RC*Q4
 \end{align*}
 
 \section{Results\label{results}}
@@ -172,6 +177,8 @@ The fitted model coefficients for each response can be seen below, allowing for 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
+## [1] "this is where i will put the plot I am working on"
+## [1] "that we discussed in our last meeting"
 ##                        logodds.external1 logodds.utility1 logodds.pest1
 ## (Intercept)                 -0.493533756     -0.292947930  -0.759181146
 ## RentControl1                 0.271756303      0.299395199   0.227396648

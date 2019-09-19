@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (MiKTeX 2.9.7140 64-bit) (preloaded format=xelatex 2019.9.13)  16 SEP 2019 18:13
+This is XeTeX, Version 3.14159265-2.6-0.999991 (MiKTeX 2.9.7140 64-bit) (preloaded format=xelatex 2019.9.13)  19 SEP 2019 19:05
 entering extended mode
 **./JSM_Proceedings.tex
 (JSM_Proceedings.tex
@@ -68,6 +68,10 @@ Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 )
 ("C:\Users\lukei\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\alltt.sty"
 Package: alltt 1997/06/16 v2.0g defines alltt environment
+)
+("C:\Users\lukei\AppData\Local\Programs\MiKTeX 2.9\tex/latex/setspace\setspace.
+sty"
+Package: setspace 2011/12/19 v6.7a set line spacing
 )
 ("C:\Users\lukei\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsmath\amsmath.st
 y"
@@ -221,145 +225,141 @@ Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
 )) (JSM_Proceedings.aux)
 \openout1 = `JSM_Proceedings.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 60.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 60.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 61.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 61.
 
 ("C:\Users\lukei\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\ts1cmr.fd"
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    ... okay on input line 61.
 
 [1
 
-]
-Package color Info: Redefining color shadecolor on input line 96.
+] [2]
+Package color Info: Redefining color shadecolor on input line 97.
 File: figure/fig1-1.pdf Graphic file (type pdf)
 <use figure/fig1-1.pdf>
-Package color Info: Redefining color shadecolor on input line 108.
+Package color Info: Redefining color shadecolor on input line 109.
 File: figure/fig2-1.pdf Graphic file (type pdf)
 <use figure/fig2-1.pdf>
- [2] [3] [4]
-Package color Info: Redefining color shadecolor on input line 127.
+ [3] [4] [5]
+Package color Info: Redefining color shadecolor on input line 132.
 File: figure/fig3-1.pdf Graphic file (type pdf)
 <use figure/fig3-1.pdf>
- [5]
-Overfull \hbox (69.78302pt too wide) detected at line 167
-[]
- []
-
-Package color Info: Redefining color shadecolor on input line 173.
-
-Overfull \hbox (29.40741pt too wide) in paragraph at lines 190--190
+ [6]
+Package color Info: Redefining color shadecolor on input line 178.
+ [7]
+Overfull \hbox (29.40741pt too wide) in paragraph at lines 197--197
 []\TU/lmtt/m/n/10.95 ##                        logodds.external1 logodds.utilit
 y1 logodds.pest1[] 
  []
 
 
-Overfull \hbox (29.40741pt too wide) in paragraph at lines 190--190
+Overfull \hbox (29.40741pt too wide) in paragraph at lines 197--197
 []\TU/lmtt/m/n/10.95 ## (Intercept)                 -0.493533756     -0.2929479
 30  -0.759181146[] 
  []
 
 
-Overfull \hbox (29.40741pt too wide) in paragraph at lines 190--190
+Overfull \hbox (29.40741pt too wide) in paragraph at lines 197--197
 []\TU/lmtt/m/n/10.95 ## RentControl1                 0.271756303      0.2993951
 99   0.227396648[] 
  []
 
 
-Overfull \hbox (29.40741pt too wide) in paragraph at lines 190--190
+Overfull \hbox (29.40741pt too wide) in paragraph at lines 197--197
 []\TU/lmtt/m/n/10.95 ## Quartile2                   -0.058595041     -0.1141984
 50  -0.167299474[] 
  []
 
 
-Overfull \hbox (29.40741pt too wide) in paragraph at lines 190--190
+Overfull \hbox (29.40741pt too wide) in paragraph at lines 197--197
 []\TU/lmtt/m/n/10.95 ## Quartile3                   -0.119033412     -0.1849678
 63  -0.264667815[] 
  []
 
 
-Overfull \hbox (29.40741pt too wide) in paragraph at lines 190--190
+Overfull \hbox (29.40741pt too wide) in paragraph at lines 197--197
 []\TU/lmtt/m/n/10.95 ## Quartile4                   -0.223564559     -0.2022206
 60  -0.365791108[] 
  []
 
 
-Overfull \hbox (29.40741pt too wide) in paragraph at lines 190--190
+Overfull \hbox (29.40741pt too wide) in paragraph at lines 197--197
 []\TU/lmtt/m/n/10.95 ## year                        -0.006505077     -0.0075563
 19   0.024499182[] 
  []
 
 
-Overfull \hbox (29.40741pt too wide) in paragraph at lines 190--190
+Overfull \hbox (29.40741pt too wide) in paragraph at lines 197--197
 []\TU/lmtt/m/n/10.95 ## borough2                    -0.177031792     -0.2363932
 55  -0.265643194[] 
  []
 
 
-Overfull \hbox (29.40741pt too wide) in paragraph at lines 190--190
+Overfull \hbox (29.40741pt too wide) in paragraph at lines 197--197
 []\TU/lmtt/m/n/10.95 ## borough3                    -0.036493198     -0.1536719
 05  -0.418226412[] 
  []
 
 
-Overfull \hbox (29.40741pt too wide) in paragraph at lines 190--190
+Overfull \hbox (29.40741pt too wide) in paragraph at lines 197--197
 []\TU/lmtt/m/n/10.95 ## borough4                    -0.452288602     -0.4362842
 58  -0.720474528[] 
  []
 
 
-Overfull \hbox (29.40741pt too wide) in paragraph at lines 190--190
+Overfull \hbox (29.40741pt too wide) in paragraph at lines 197--197
 []\TU/lmtt/m/n/10.95 ## borough5                    -0.442607786     -0.4872977
 28  -1.019234214[] 
  []
 
 
-Overfull \hbox (29.4074pt too wide) in paragraph at lines 190--190
+Overfull \hbox (29.4074pt too wide) in paragraph at lines 197--197
 []\TU/lmtt/m/n/10.95 ## RentControl1:Quartile2       0.038081660      0.1293841
 22   0.118470653[] 
  []
 
 
-Overfull \hbox (29.4074pt too wide) in paragraph at lines 190--190
+Overfull \hbox (29.4074pt too wide) in paragraph at lines 197--197
 []\TU/lmtt/m/n/10.95 ## RentControl1:Quartile3       0.045455023      0.1812202
 62   0.271324737[] 
  []
 
 
-Overfull \hbox (29.4074pt too wide) in paragraph at lines 190--190
+Overfull \hbox (29.4074pt too wide) in paragraph at lines 197--197
 []\TU/lmtt/m/n/10.95 ## RentControl1:Quartile4       0.115675655      0.1650213
 94   0.356153120[] 
  []
 
 
-Overfull \hbox (29.40741pt too wide) in paragraph at lines 190--190
+Overfull \hbox (29.40741pt too wide) in paragraph at lines 197--197
 []\TU/lmtt/m/n/10.95 ## RentControl1:year           -0.001466792     -0.0019157
 74   0.006100295[] 
  []
 
-[6] [7] (JSM_Proceedings.aux) ) 
+[8] [9] (JSM_Proceedings.aux) ) 
 Here is how much of TeX's memory you used:
- 1811 strings out of 427669
- 22805 string characters out of 3144952
- 99124 words of memory out of 3000000
- 5860 multiletter control sequences out of 15000+200000
+ 1844 strings out of 427669
+ 23324 string characters out of 3144952
+ 95451 words of memory out of 3000000
+ 5890 multiletter control sequences out of 15000+200000
  9879 words of font info for 42 fonts, out of 3000000 for 9000
  1348 hyphenation exceptions out of 8191
  27i,12n,21p,1477b,280s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on JSM_Proceedings.pdf (7 pages).
+Output written on JSM_Proceedings.pdf (9 pages).

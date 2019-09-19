@@ -1,11 +1,12 @@
 \documentclass[11pt]{asaproc}
 \usepackage{graphicx}
-
+\usepackage{setspace}
 \usepackage{amsmath}
 
+\doublespacing
 
 \title{An Analysis of the Impact of Rent Control on New York City Housing}
-\author{Benjamin W. Schweitzer \and Thomas J. Fisher \and Karsten Maurer}
+\author{Benjamin W. Schweitzer \and Thomas J. Fisher \and Karsten Maurer \and Alison Tuiyott \and Lydia Carter \and Robert Garrett}
 
 \begin{document}
 
@@ -36,13 +37,14 @@ Now each row represents a unit that has all of these varaibles we have created t
 \subsection{Exploratory Data Analysis}
 This data set can be explored visually to identify trend in the data that might be useful during the modeling stage. In figure 1, you can see the proportion of homes with an external damage partitioned by borough, rent quartile, and whether or not the home was under rent control. It is clear that in almost all bouroughs, for each rent quartile, the porporiton of rent controlled homes with an external damage is higher than than the proportion of homes not under rent control with an external damage. This trend is seen in most years in all three damage types, indicating there may a correaltion bewtween rent control status and higher damage rates.
 
-In Figure 2, you can see the porportion of homes in Brooklyn with a utility damage over time, along with bands that represent the middle 50 percent of sub-borough damage rates that were used to calculate the borough wide porportion. You can see that there exists a gap between the rent controlled and non rent controlled damage rates each year. This may reinforce the trend we started to see in figure 1, indicating we may see some positive correlation between rent control status and higher damage rates in teh three categories.
+In Figure 2, you can see the median sub-borough utility damage rate of homes in Brooklyn over time, along with bands that represent the middle 50 percent of sub-borough damage rates that were used to calculate the borough wide porportion. You can see that there exists a gap between the rent controlled and non rent controlled damage rates each year. This may reinforce the trend we started to see in figure 1, indicating we may see some positive correlation between rent control status and higher damage rates in the three categories.
  
 <<include=FALSE>>=
 require(ggplot2)
 require(tidyverse)
 require(reldist)
 require(RColorBrewer)
+require(spatstat)
 setwd("~/GitHub/RCPA_paper")
 load("data/aggmodel.Rdata")
 aggmodel <- aggmodel %>%
@@ -69,13 +71,17 @@ plot.ext <- ggplot()+
            data=plot.data.trim)+
   geom_hline(yintercept = 0)+
   labs(title="Comparison of External Damage Rates in New York City 1996",
-       subtitle = "Comparison of Rent Controlled and Non-Rent Controlled Units",
+       subtitle = "Grouped by Rent Control Statuts and Faceted by Rent Quartile",
        x = "Borough",
        y ="% of Homes with \n External Damage",
-      fill="Under Rent \n Control?")+
+      fill="Under Rent Control?")+
   scale_y_continuous(breaks = c(0,.15,.3,.45,.6), labels = c("0%","15%","30%","45%","60%"))+
   scale_fill_manual(values = c("lightblue", "indianred"))+
-  facet_grid(Quartile~.)
+  facet_grid(Quartile~.)+
+  theme_bw()+
+  theme(legend.position = "bottom")
+plot.ext
+
 plot.utl <- ggplot()+
   geom_bar(aes(x=borough,y=PctDamage.UtilityDamage, fill=RentControl),
            position = position_dodge(),
@@ -110,6 +116,7 @@ data2 <- aggmodel %>%
                 PctDamage.External.Q1 = wtd.quantile(PctDamage.External, q = .25, weight=numHouses),
                 PctDamage.External.Q3 = wtd.quantile(PctDamage.External, q = .75, weight=numHouses),
                 PctDamage.UtilityDamage.Mean = sum(PctDamage.UtilityDamage*numHouses)/sum(numHouses),
+                PctDamage.UtilityDamage.Median = weighted.median(PctDamage.UtilityDamage,numHouses),
                 PctDamage.UtilityDamage.Q1 = wtd.quantile(PctDamage.UtilityDamage, q = .25, weight=numHouses),
                 PctDamage.UtilityDamage.Q3 = wtd.quantile(PctDamage.UtilityDamage, q = .75, weight=numHouses),
                 PctDamage.PestPresent.Mean = sum(PctDamage.PestPresent*numHouses)/sum(numHouses),
@@ -122,7 +129,7 @@ myColors <- brewer.pal(5,"Set1")
 names(myColors) <- levels(data2$borough)
 colScale <- scale_colour_manual(name = "Borough",values = myColors)
 fillScale <- scale_fill_manual(name = "Borough",values = myColors)
-plot.time <- ggplot(data2, aes(x=year, y=PctDamage.UtilityDamage.Mean, col= borough))+
+plot.time <- ggplot(data2, aes(x=year, y=PctDamage.UtilityDamage.Median, col= borough))+
   theme_bw()+
   geom_point(size=3)+
   geom_line(aes(linetype=as.factor(RentControl)),size=1)+
@@ -134,18 +141,19 @@ plot.time <- ggplot(data2, aes(x=year, y=PctDamage.UtilityDamage.Mean, col= boro
                      labels=c("1991","1993","1996","1999","2002","2005","2008","2011","2014","2017"),
                      limits=c(1,27))+
   scale_y_continuous(breaks=c(0,.1,.2,.3,.4,.5,.6,.7,.8),
-                     labels=c("0%","10%","20%","30%","40%","50%","60%","70%","80%"))+
+                     labels=c("0%","10%","20%","30%","40%","50%","60%","70%","80%"),
+                     name ="% of Homes with \n External Damage")+
   coord_cartesian(ylim = c(0.04,.85))+
   geom_hline(yintercept = 0)+
-  theme(legend.position="bottom", axis.title.x = element_blank(), axis.title.y = element_blank())+
-  labs(title="Utility Damage Rates in Time", subtitle = "Brooklyn Damage Rates from 1991-2017")+
+  theme(legend.position="bottom", axis.title.x = element_blank())+
+  labs(title="Utility Damage Rates in Time", subtitle = "Brooklyn Median Sub-borough Damage Rates from 1991-2017")+
   geom_ribbon(aes(ymin=PctDamage.UtilityDamage.Q1, ymax=PctDamage.UtilityDamage.Q3,  alpha=RentControl, fill= borough, col = NA))+
   scale_alpha_discrete(name="Rent Controlled",
                              breaks=c("1", "0"),
                              labels=c("Yes", "No"),
                              range = c(0.2, .5))+
+  guides(fill = FALSE, col = FALSE)+
   fillScale
-plot.time
 @
 
 \begin{figure}
@@ -230,6 +238,7 @@ bayes.plot <- ggplot()+
                      labels = c("0%","25%","50%","75%","100%"),
                      name = "% of Houses with Damage")+
   labs(title="Sub-borough Damage Rates", subtitle="Bayes Regularization Visualization", y="Density")+
+  theme_bw()+
   facet_grid(.~Type)
 
 aggmodel <- aggmodel %>%
@@ -245,6 +254,10 @@ big.mod1 <- lm(cbind(logodds.external1,logodds.utility1,logodds.pest1) ~
 @
 
 During the aggregation process, we ran into a problem with some of the sub-borough level proportions. In some cases, there would only be a few homes to represent the rent controlled or non-rent controlled homes within a rent quartile for a sub-borough. So, if there are only a few houses and they all have or do not have a damage present, the estimated proportion for the whole sub-borough becomes 100\% or 0\%. This is clearly incorrect, so we must do some form of correction to the proportions to ensure the sub-boroughs proportions are being accurately represented. Through Bayes regularization using a Beta conjugate with shape parameters chosen from groupings that didn’t result in a 0\% or 100\%, we were able to ‘fix’ the proportions to ensure the groups with few houses to represent the entire group have accurate proportions we can use in the modeling stage. 
+
+\[
+\mathbf{p} = \frac{n}{n+\alpha+\beta}*\hat{p}+\frac{\alpha+\beta}{n+\alpha+\beta}*\frac{\alpha}{\alpha+\beta}
+\]
 
 \begin{figure}
 \begin{center}
@@ -270,23 +283,23 @@ log\left(\frac{Pest}{1-Pest}\right)
 \right]
 \]
 
-The predictors variables we used to model the response are as follows. RentControl has a value 1 if home is under rent control policy, 0 if otherwise. IthRentQuartile is 1 if home falls into the ith rent quartile, 0 if otherwise and if all are 0 the home is in the 1st rent quartile. Year has a value of 1990 subtracted from the year of the observation. Brooklyn has a value 1 if home is in Brooklyn, 0 if otherwise. Manhattan has a value 1 if home is in Manhattan, 0 if otherwise. Queens has a value 1 if home is in Queens, 0 if otherwise. StatenIsland has a value 1 if home is in StatenIsland, 0 if otherwise. If all borough variables have a value of 0, then the home is in the Bronx.
+The predictors variables we used to model the response are as follows. Rent Control (RC) has a value 1 if home is under rent control policy, 0 if otherwise. Ith Rent Quartile (Qi) is 1 if home falls into the ith rent quartile, 0 if otherwise and if all are 0 the home is in the 1st rent quartile. Year (T) has a value of 1990 subtracted from the year of the observation. Brooklyn has a value 1 if home is in Brooklyn, 0 if otherwise. Manhattan has a value 1 if home is in Manhattan, 0 if otherwise. Queens has a value 1 if home is in Queens, 0 if otherwise. StatenIsland has a value 1 if home is in StatenIsland, 0 if otherwise. If all borough variables have a value of 0, then the home is in the Bronx.
 
 \begin{align*}
 \mathbf{Y} = &\boldsymbol{\beta_0}+\\
-&\boldsymbol{\beta_1}*Year+\\
-&\boldsymbol{\beta_2}*2ndRentQuartile+
-\boldsymbol{\beta_3}*3rdRentQuartile+
-\boldsymbol{\beta_4}*4thRentQuartile+\\
-&\boldsymbol{\beta_5}*RentControl+
-\boldsymbol{\beta_6}*Brooklyn+
+&\boldsymbol{\beta_1}*T+\\
+&\boldsymbol{\beta_2}*Q2+
+\boldsymbol{\beta_3}*Q3+
+\boldsymbol{\beta_4}*Q4+\\
+&\boldsymbol{\beta_5}*RC+\\
+&\boldsymbol{\beta_6}*Brooklyn+
 \boldsymbol{\beta_7}*Manhattan+
 \boldsymbol{\beta_8}*Queens+
 \boldsymbol{\beta_9}*StatenIsland+\\
-&\boldsymbol{\beta_{10}}*RentControl*Year+\\
-&\boldsymbol{\beta_{11}}*RentControl*2ndRentQuartile+\\
-&\boldsymbol{\beta_{12}}*RentControl*3rdRentQuartile+\\
-&\boldsymbol{\beta_{13}}*RentControl*4thRentQuartile
+&\boldsymbol{\beta_{10}}*RC*T+\\
+&\boldsymbol{\beta_{11}}*RC*Q2+
+\boldsymbol{\beta_{12}}*RC*Q3+
+\boldsymbol{\beta_{13}}*RC*Q4
 \end{align*}
 
 \section{Results\label{results}}
@@ -294,6 +307,8 @@ The fitted model coefficients for each response can be seen below, allowing for 
 
 <<echo=FALSE>>=
 coef.table <- as.data.frame(big.mod1[[1]])
+print("this is where i will put the plot I am working on")
+print("that we discussed in our last meeting")
 coef.table
 @
 
